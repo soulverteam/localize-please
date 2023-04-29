@@ -1,7 +1,14 @@
 # localize-please
-#### Automatic localization of your Mac or iOS app using ChatGPT
+#### Automatic localization of your Mac or iOS app using the ChatGPT API
 
- localize-please  is a command-line tool that automatically translates the text content of your Mac or iOS app, using OpenAI's GPT language model.
+## Motivation
+Supporting multiple languages in a Mac or iOS app is a drag, because as you add new features or tweak existing ones, you need to continually update the strings for every language you support (which can involve waiting on translators, etc).
+
+This tool uses OpenAI's GPT APIs (which are excellent at context-aware translation) to make update all your strings or xloc files for all your supported languages, just by running a single command.
+
+## What does Localize, Please do?
+
+`localize-please` is a command-line tool that automatically translates the text content of your Mac or iOS app, using OpenAI's GPT language model.
 
 Use `localize-please` to translate your app into a new language, or update an existing localization whenever you add a new feature.
 
@@ -21,28 +28,24 @@ Supported file types for automatic localization include:
 - OpenAI offers a free quota of API requests for new accounts
 
 ## Installation
-Download the binary of the latest version of the  localize-please  command line tool from the  Releases  section. 
+Download the binary of the latest version of the `localize-please` command line tool from the Releases section.
 
 ### Setup
 
-Run the `set-api-key` command with your OpenAI API key:
+Run the `set-api-key` command with your OpenAI API key (this only needs to be done once):
 
 ```bash
 localize-please set-api-key "sk-EXAMPLE-KEY-1234567890"
 ```
 
-This only needs to be done once.
-
-If you want to add a new language to your project, make sure you've done this first using Xcode (Project > Info > Localizations) before running `localize-please`.
-
 ## Usage
 
-Run the `localize-please` command on a path to your Xcode project folder (that contains .lproj folders):
+Run the `localize-please` command with a path to an Xcode project folder (the folder that contains lproj folders):
 
 ```bash
 localize-please "/Users/zac/Projects/MyCoolApp/"
 ```
-or on a folder contining .xloc files, created by Xcode's `Export Localizations…` command:
+or with a folder contining .xloc files, created by Xcode's `Export Localizations…` command:
 
 ```bash
 localize-please "/Users/zac/Desktop/Exported Localizations/"
@@ -60,17 +63,25 @@ localize-please "/Users/zac/Desktop/Exported Localizations/"
 
 ## Accuracy & error handling
 
--  OpenAI's GPT language model is very good at translating and understands the context that informs an accurate translation.
--  If OpenAI's GPT language model fails to translate a particular string for any reason, the original translation will be left untouched.
+OpenAI's GPT language model is very good at translating and understands the context that informs an accurate translation.
 
-#### Should I only rely on this tool for my translations?
-Even though ChatGPT does very good translations, it's still worth checking the translation with native speakers. 
+If OpenAI's GPT language model fails to translate a particular string for any reason, the original translation will be left untouched.
 
-Still, it's a lot more time efficient to first translate a project automatically, and then fix the odd issue, than for a human localizer to translate from scratch.
+## Performance
+The OpenAI ChatGPT API currently translates about 2 strings/second. So please be patient the first time you run the tool on a completely new language for your project.
 
-### Performance
-- The OpenAI ChatGPT API currently translates about 2 strings/second. Please be patient the first time you run the tool on a new language. 
-- `localize-please` is incremental, so further invocations will run more quickly (just strings that need translating).
+`localize-please` is incremental, and further invocations of the tool will attempt to translate only the strings that appear untranslated.
+
+## Why should I use localize-please instead of ChatGPT directly?
+There are a few reasons:
+- ChatGPT can only handle a certain amount of input in a single query, whereas `localize-please` splits your files up into chunks
+- ChatGPT sometimes messes up the translation format. `localize-please` does its best to keep the format of translations correct and not mess up the formatting of your files
+- Copying and pasting is boring: `localize-please` is a single command that works across multiple files and languages from one command
+
+## Should I only rely on this tool for my translations?
+Even though ChatGPT does very good translations, it's still worth checking your translation with native speakers.
+
+It's still more time efficient to first translate a project automatically using a good AI service, and then fix the odd issue, than for a human localizer to translate an entire project from scratch.
 
 ## Avoiding ambiguity in translations
 
@@ -111,7 +122,7 @@ Specify the comment under in the "Localizer Hint" property for the label or cont
 -  `localize-please` also works with plain text and markdown (`.md`) files. So you can automatically translate your release notes for an update by including a `release-notes.md` file in your project as a localized file.
 
 ## Mac app with GUI?
-A Mac app that wraps this tool with a nice GUI is in development.
+A Mac app that offers a nice GUI around this tool is in development. It will be available later this year.
 
 ## License
 This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE) for more information.
