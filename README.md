@@ -28,7 +28,17 @@ Supported file types for automatic localization include:
 - OpenAI offers a free quota of API requests for new accounts
 
 ## Installation
-Download the binary of the latest version of the `localize-please` command line tool from the Releases section.
+
+The easiest way to install `localize-please` is via [Homebrew](https://brew.sh).
+
+After installing Homebrew, run the following command:
+
+```sh
+brew tap soulverteam/localize-please https://github.com/soulverteam/localize-please
+brew install localize-please
+```
+
+Alternatively, download the binary of the latest version of the `localize-please` command line tool from the [Releases](https://github.com/soulverteam/localize-please/releases/latest) section on this Github page.
 
 ### Setup
 
